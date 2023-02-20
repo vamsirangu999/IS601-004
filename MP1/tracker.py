@@ -279,11 +279,28 @@ def delete_task(index):
 
 def get_incomplete_tasks():
     """ prints a list of tasks that are not done """
-    # generate a list of tasks where the task is not done
-    # pass that list into list_tasks()
-    # include your ucid and date as a comment of when you implemented this, briefly summarize the solution
     _tasks = []
-    list_tasks(_tasks)
+
+    # generate a list of tasks where the task is not done
+    if tasks:
+        for task in tasks:
+            if not task["done"]:
+                _tasks.append(task)
+    else:
+        print("No Tasks Available")
+    # pass that list into list_tasks()
+    if _tasks:
+        list_tasks(_tasks)
+    else:
+        print("All Tasks are Completed")
+
+    # include your ucid and date as a comment of when you implemented this, briefly summarize the solution
+    # ucid = vr76
+    # date = 20/02/2023
+    # solution:
+    # 1. iterating through tasks list  and appending incomplete tasks to list
+    # 2. passing _tasks to list_tasks() only if _tasks is not empty
+    # 3. ucid and implemented date has been added
 
 
 def get_overdue_tasks():
