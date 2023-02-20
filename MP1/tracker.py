@@ -5,12 +5,13 @@ import os
 tasks = []
 # constant, don't edit, use .copy()
 TASK_TEMPLATE = {
-    "name":"",
-    "due": None, # datetime
-    "lastActivity": None, # datetime
+    "name": "",
+    "due": None,  # datetime
+    "lastActivity": None,  # datetime
     "description": "",
-    "done": False # False if not done, datetime otherise
+    "done": False  # False if not done, datetime otherise
 }
+
 
 # don't edit, intentionaly left an unhandled exception possibility
 def str_to_datetime(datetime_str):
@@ -21,47 +22,78 @@ def str_to_datetime(datetime_str):
     except:
         return datetime.strptime(datetime_str, '%Y-%m-%d %H:%M:%S')
 
+
 def save():
     """ writes the tasks list to a json file to persist changes """
     f = open("tracker.json", "w")
     f.write(json.dumps(tasks, indent=4, default=str))
     f.close()
 
+
 def load():
     """ loads the task list from a json file """
     if not os.path.isfile("tracker.json"):
         return
     f = open("tracker.json", "r")
-    
+
     data = json.load(f)
     # Note about global keyword: https://stackoverflow.com/a/11867510
     global tasks
     tasks = data
     f.close()
-    print(f"data {data}")    
+    print(f"data {data}")
+
 
 def list_tasks(_tasks):
     """ List a summary view of all tasks """
     i = 0
     for t in _tasks:
-        print(f"{i+1}) [{'x' if t['done'] else ' '}] Task: {t['name']} (Due: {t['due']})")
+        print(f"{i + 1}) [{'x' if t['done'] else ' '}] Task: {t['name']} (Due: {t['due']})")
         i += 1
     if len(_tasks) == 0:
         print("No tasks to show")
+
 
 # edits should happen below this line
 
 def add_task(name: str, description: str, due: str):
     """ Copies the TASK_TEMPLATE and fills in the passed in data then adds the task to the tasks list """
-    task = TASK_TEMPLATE.copy() # don't delete this
-    # update lastActivity with the current datetime value
-    # set the name, description, and due date (all must be provided)
-    # due date must match one of the formats mentioned in str_to_datetime()
-    # add the new task to the tasks list
-    # output a message confirming the new task was added or if the addition was rejected due to missing data
-    # make sure save() is still called last in this function
+    task = TASK_TEMPLATE.copy()  # don't delete this
+    try:
+        # update lastActivity with the current datetime value
+        task["lastActivity"] = datetime.now().strftime("%m/%d/%Y %H:%M:%S")
+
+        # set the name, description, and due date (all must be provided)
+        # due date must match one of the formats mentioned in str_to_datetime()
+        task["name"] = name
+        task["description"] = description
+        task["due"] = str_to_datetime(due).strftime("%m/%d/%Y %H:%M:%S")
+
+        # add the new task to the tasks list
+        tasks.append(task)
+
+        # make sure save() is still called last in this function
+        save()
+
+        # output a message confirming the new task was added or if the addition was rejected due to missing data
+        print("new task added!")
+        print(task)
+
+    except Exception as e:
+        print("new task rejected!")
+        print(str(e))
+
     # include your ucid and date as a comment of when you implemented this, briefly summarize the solution
-    save()
+    # ucid = vr76
+    # date = 20/02/2023
+    # solution
+    # 1. updated lastActivity with the current datetime using strftime function from datetime.now()
+    # 2. assigned name, description and due date values to task Dict
+    # 3. for due date used str_to_datetime function for validating the format
+    # 4. appended the new task to tasks List()
+    # 5. used try-except for displaying message of confirmation or rejection
+    # 6. save() function remains same it the end
+    # 7. ucid and implemented date has been added
 
 def process_update(index):
     """ extracted the user input prompts to get task data then passes it to update_task() """
@@ -69,13 +101,14 @@ def process_update(index):
     # consider index out of bounds scenarios and include appropriate message(s) for invalid index
     # show the existing value of each property where the TODOs are marked in the text of the inputs (replace the TODO related text)
     # include your ucid and date as a comment of when you implemented this, briefly summarize the solution
-    
+
     name = input(f"What's the name of this task? (TODO name) \n").strip()
     desc = input(f"What's a brief descriptions of this task? (TODO description) \n").strip()
     due = input(f"When is this task due (format: m/d/y H:M:S) (TODO due) \n").strip()
     update_task(index, name=name, description=desc, due=due)
 
-def update_task(index: int, name: str, description:str, due: str):
+
+def update_task(index: int, name: str, description: str, due: str):
     """ Updates the name, description , due date of a task found by index if an update to the property was provided """
     # find the task by index
     # consider index out of bounds scenarios and include appropriate message(s) for invalid index
@@ -84,8 +117,9 @@ def update_task(index: int, name: str, description:str, due: str):
     # output that the task was updated if any items were changed, otherwise mention task was not updated
     # make sure save() is still called last in this function
     # include your ucid and date as a comment of when you implemented this, briefly summarize the solution
-    
+
     save()
+
 
 def mark_done(index):
     """ Updates a single task, via index, to a done datetime"""
@@ -97,6 +131,7 @@ def mark_done(index):
     # include your ucid and date as a comment of when you implemented this, briefly summarize the solution
 
     save()
+
 
 def view_task(index):
     """ View more info about a specific task fetch by index """
@@ -121,8 +156,9 @@ def delete_task(index):
     # consider index out of bounds scenarios and include appropriate message(s) for invalid index
     # make sure save() is still called last in this function
     # include your ucid and date as a comment of when you implemented this, briefly summarize the solution
-    
+
     save()
+
 
 def get_incomplete_tasks():
     """ prints a list of tasks that are not done """
@@ -132,6 +168,7 @@ def get_incomplete_tasks():
     _tasks = []
     list_tasks(_tasks)
 
+
 def get_overdue_tasks():
     """ prints a list of tasks that are over due completion (not done and expired) """
     # generate a list of tasks where the due date is older than now and that are not complete
@@ -139,6 +176,7 @@ def get_overdue_tasks():
     # include your ucid and date as a comment of when you implemented this, briefly summarize the solution
     _tasks = []
     list_tasks(_tasks)
+
 
 def get_time_remaining(index):
     """ outputs the number of days, hours, minutes, seconds a task has before it's overdue otherwise shows similar info for how far past due it is """
@@ -150,9 +188,13 @@ def get_time_remaining(index):
     # include your ucid and date as a comment of when you implemented this, briefly summarize the solution
     task = {}
 
+
 # no changes needed below this line
 
-command_list = ["add", "view", "update", "list", "incomplete", "overdue", "delete", "remaining", "help", "quit", "exit", "done"]
+command_list = ["add", "view", "update", "list", "incomplete", "overdue", "delete", "remaining", "help", "quit", "exit",
+                "done"]
+
+
 def print_options():
     """ prints a readable list of commands that can be typed when prompted """
     print("Choices")
@@ -168,13 +210,14 @@ def print_options():
     print("quit or exit - terminates the program")
     print("help - shows this list again")
 
+
 def run():
     """ runs the program until terminated or a quit/exit command is used """
     print("Welcome to Task Tracker!")
     load()
     print_options()
-    while(True):
-        opt = input("What would you like to do?\n").strip() # strip removes whitespace from beginning/end
+    while (True):
+        opt = input("What would you like to do?\n").strip()  # strip removes whitespace from beginning/end
         if opt not in command_list:
             print("That's not a valid option")
         elif opt == "add":
@@ -184,15 +227,15 @@ def run():
             add_task(name, desc, due)
         elif opt == "view":
             num = int(input("Which task do you want to view? (hint: number from 'list') ").strip())
-            index = num-1
+            index = num - 1
             view_task(index)
         elif opt == "update":
             num = int(input("Which task do you want to update? (hint: number from 'list') ").strip())
-            index = num-1
+            index = num - 1
             process_update(index)
         elif opt == "done":
             num = int(input("Which task do you want to complete? (hint: number from 'list') ").strip())
-            index = num-1
+            index = num - 1
             mark_done(index)
         elif opt == "list":
             list_tasks(tasks)
@@ -202,17 +245,18 @@ def run():
             get_overdue_tasks()
         elif opt == "delete":
             num = int(input("Which task do you want to delete? (hint: number from 'list') ").strip())
-            index = num-1
+            index = num - 1
             delete_task(index)
         elif opt == "remaining":
             num = int(input("Which task do you like to get the duration for? (hint: number from 'list') ").strip())
-            index = num-1
+            index = num - 1
             get_time_remaining(index)
         elif opt in ["quit", "exit"]:
             print("Good bye.")
             quit()
         elif opt == "help":
             print_options()
-        
+
+
 if __name__ == "__main__":
     run()
