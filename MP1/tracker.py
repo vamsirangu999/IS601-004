@@ -331,14 +331,58 @@ def get_overdue_tasks():
 
 def get_time_remaining(index):
     """ outputs the number of days, hours, minutes, seconds a task has before it's overdue otherwise shows similar info for how far past due it is """
-    # get the task by index
     # consider index out of bounds scenarios and include appropriate message(s) for invalid index
-    # get the days, hours, minutes, seconds between the due date and now
-    # display the remaining time via print in a clear format showing days, hours, minutes, seconds
-    # if the due date is in the past print out how many days, hours, minutes, seconds the task is over due (clearly note that it's over due, values should be positive)
-    # include your ucid and date as a comment of when you implemented this, briefly summarize the solution
-    task = {}
+    try:
+        # get the task by index
+        task = tasks[index]
+        if not task["done"]:
+            # if the due date is in the past print out how many days, hours, minutes, seconds the task is over due (clearly note that it's over due, values should be positive)
+            if datetime.strptime(task["due"], '%m/%d/%Y %H:%M:%S') < datetime.now():
+                delta = datetime.now() - datetime.strptime(task["due"], '%m/%d/%Y %H:%M:%S')
 
+                days = delta.days
+                hours, remainder = divmod(delta.seconds, 3600)
+                minutes, seconds = divmod(remainder, 60)
+                seconds += delta.microseconds / 1e6
+
+                # get the days, hours, minutes, seconds between the due date and now
+                print("Overdue: ")
+                print("Days: " + str(days))
+                print("Hours: " + str(hours))
+                print("Minutes: " + str(minutes))
+                print("Seconds: " + str(seconds))
+                print()
+            else:
+                delta = datetime.strptime(task["due"], '%m/%d/%Y %H:%M:%S') - datetime.now()
+
+                days = delta.days
+                hours, remainder = divmod(delta.seconds, 3600)
+                minutes, seconds = divmod(remainder, 60)
+                seconds += delta.microseconds / 1e6
+
+                # display the remaining time via print in a clear format showing days, hours, minutes, seconds
+                print("Remaining: ")
+                print("Days: " + str(days))
+                print("Hours: " + str(hours))
+                print("Minutes: " + str(minutes))
+                print("Seconds: " + str(seconds))
+                print()
+        else:
+            print("Task is Completed!")
+    except IndexError:
+        print("Given index is not available in Tasks list!")
+    except Exception as e:
+        print(str(e))
+    # include your ucid and date as a comment of when you implemented this, briefly summarize the solution
+    # ucid = vr76
+    # date = 20/02/2023
+    # solution:
+    # 1. fetched task from tasks list with given index value
+    # 2. used try-except for displaying message for index out of bounds scenarios
+    # 3. Difference between current date and due date
+    # 4. Displayed Remaining time if current date is lesser than the due date
+    # 5. Displayed Overdue if current date is greater than the due date
+    # 6. ucid and implemented date has been added
 
 # no changes needed below this line
 
