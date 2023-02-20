@@ -130,15 +130,53 @@ def process_update(index):
 
 def update_task(index: int, name: str, description: str, due: str):
     """ Updates the name, description , due date of a task found by index if an update to the property was provided """
-    # find the task by index
     # consider index out of bounds scenarios and include appropriate message(s) for invalid index
-    # update incoming task data if it's provided (if it's not provided use the original task property value)
-    # update lastActivity with the current datetime value
-    # output that the task was updated if any items were changed, otherwise mention task was not updated
-    # make sure save() is still called last in this function
-    # include your ucid and date as a comment of when you implemented this, briefly summarize the solution
+    try:
+        flag = False
+        # find the task by index
+        task = tasks[index]
 
-    save()
+        # update incoming task data if it's provided (if it's not provided use the original task property value)
+        if name not in [None, ""]:
+            flag = True
+            task["name"] = name
+        if description not in [None, ""]:
+            flag = True
+            task["description"] = description
+        if due not in [None, ""]:
+            flag = True
+            task["due"] = str_to_datetime(due).strftime("%m/%d/%Y %H:%M:%S")
+
+        # output that the task was updated if any items were changed, otherwise mention task was not updated
+        if flag:
+            # update lastActivity with the current datetime value
+            task["lastActivity"] = datetime.now().strftime("%m/%d/%Y %H:%M:%S")
+
+            tasks[index] = task
+
+            # make sure save() is still called last in this function
+            save()
+
+            print("Task was updated!")
+            print(task)
+        else:
+            print("Task not updated!")
+
+    except IndexError:
+        print("Given index is not available in Tasks list!")
+    except Exception as e:
+        print(str(e))
+    # include your ucid and date as a comment of when you implemented this, briefly summarize the solution
+    # ucid = vr76
+    # date = 20/02/2023
+    # solution:
+    # 1. fetched task from tasks list with given index value
+    # 2. used try-except for displaying message for index out of bounds scenarios
+    # 3. Updated name, description and due only if its provided
+    # 4. updated lastActivity with the current datetime using strftime function from datetime.now()
+    # 5. used a flag to check and print message
+    # 6.save() function remains same it the end
+    # 7. ucid and implemented date has been added
 
 
 def mark_done(index):
