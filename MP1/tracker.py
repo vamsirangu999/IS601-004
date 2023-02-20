@@ -217,18 +217,33 @@ def mark_done(index):
 
 def view_task(index):
     """ View more info about a specific task fetch by index """
-    # find task from list by index
     # consider index out of bounds scenarios and include appropriate message(s) for invalid index
-    # utilize the given print statement when a task is found
+    try:
+        # find task from list by index
+        task = tasks[index]
+
+        # utilize the given print statement when a task is found
+        print(f"""
+                [{'x' if task['done'] else ' '}] Task: {task['name']}\n 
+                Description: {task['description']} \n 
+                Last Activity: {task['lastActivity']} \n
+                Due: {task['due']}\n
+                Completed: {task['done'] if task['done'] else '-'} \n
+                """.replace('  ', ' '))
+
+    except IndexError:
+        print("Given index is not available in Tasks list!")
+    except Exception as e:
+        print(str(e))
+
     # include your ucid and date as a comment of when you implemented this, briefly summarize the solution
-    task = {}
-    print(f"""
-        [{'x' if task['done'] else ' '}] Task: {task['name']}\n 
-        Description: {task['description']} \n 
-        Last Activity: {task['lastActivity']} \n
-        Due: {task['due']}\n
-        Completed: {task['done'] if task['done'] else '-'} \n
-        """.replace('  ', ' '))
+    # ucid = vr76
+    # date = 20/02/2023
+    # solution:
+    # 1. fetched task from tasks list with given index value
+    # 2. used try-except for displaying message for index out of bounds scenarios
+    # 3. utilized the given print statement for the task
+    # 4. ucid and implemented date has been added
 
 
 def delete_task(index):
