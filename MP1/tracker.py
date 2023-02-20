@@ -86,7 +86,7 @@ def add_task(name: str, description: str, due: str):
     # include your ucid and date as a comment of when you implemented this, briefly summarize the solution
     # ucid = vr76
     # date = 20/02/2023
-    # solution
+    # solution:
     # 1. updated lastActivity with the current datetime using strftime function from datetime.now()
     # 2. assigned name, description and due date values to task Dict
     # 3. for due date used str_to_datetime function for validating the format
@@ -95,17 +95,37 @@ def add_task(name: str, description: str, due: str):
     # 6. save() function remains same it the end
     # 7. ucid and implemented date has been added
 
+
 def process_update(index):
     """ extracted the user input prompts to get task data then passes it to update_task() """
-    # get the task by index
     # consider index out of bounds scenarios and include appropriate message(s) for invalid index
-    # show the existing value of each property where the TODOs are marked in the text of the inputs (replace the TODO related text)
-    # include your ucid and date as a comment of when you implemented this, briefly summarize the solution
+    try:
+        # get the task by index
+        task = tasks[index]
 
-    name = input(f"What's the name of this task? (TODO name) \n").strip()
-    desc = input(f"What's a brief descriptions of this task? (TODO description) \n").strip()
-    due = input(f"When is this task due (format: m/d/y H:M:S) (TODO due) \n").strip()
-    update_task(index, name=name, description=desc, due=due)
+        # show the existing value of each property where the TODOs are marked in the text of the inputs (replace the TODO related text)
+        print()
+        print("Existing values:")
+        print("name: " + task["name"])
+        print("description: " + task["description"])
+        print("due: " + task["due"])
+
+        name = input(f"What's the name of this task? (TODO name) \n").strip()
+        desc = input(f"What's a brief descriptions of this task? (TODO description) \n").strip()
+        due = input(f"When is this task due (format: m/d/y H:M:S) (TODO due) \n").strip()
+        update_task(index, name=name, description=desc, due=due)
+    except IndexError:
+        print("Given index is not available in Tasks list!")
+    except Exception as e:
+        print(str(e))
+    # include your ucid and date as a comment of when you implemented this, briefly summarize the solution
+    # ucid = vr76
+    # date = 20/02/2023
+    # solution:
+    # 1. fetched task from tasks list with given index value
+    # 2. used try-except for displaying message for index out of bounds scenarios
+    # 3. used print statements for showing existing value of each property where the TODOs are marked
+    # 4. ucid and implemented date has been added
 
 
 def update_task(index: int, name: str, description: str, due: str):
