@@ -181,14 +181,38 @@ def update_task(index: int, name: str, description: str, due: str):
 
 def mark_done(index):
     """ Updates a single task, via index, to a done datetime"""
-    # find task from list by index
     # consider index out of bounds scenarios and include appropriate message(s) for invalid index
-    # if it's not done, record the current datetime as the value
-    # if it is done, print a message saying it's already completed
-    # make sure save() is still called last in this function
-    # include your ucid and date as a comment of when you implemented this, briefly summarize the solution
+    try:
+        # find task from list by index
+        task = tasks[index]
 
-    save()
+        # if it's not done, record the current datetime as the value
+        # if it is done, print a message saying it's already completed
+        if not task["done"]:
+            task["done"] = datetime.now().strftime("%m/%d/%Y %H:%M:%S")
+            tasks[index] = task
+
+            # make sure save() is still called last in this function
+            save()
+        else:
+            print("It's already completed")
+
+    except IndexError:
+        print("Given index is not available in Tasks list!")
+    except Exception as e:
+        print(str(e))
+
+    # include your ucid and date as a comment of when you implemented this, briefly summarize the solution
+    # ucid = vr76
+    # date = 20/02/2023
+    # solution:
+    # 1. fetched task from tasks list with given index value
+    # 2. used try-except for displaying message for index out of bounds scenarios
+    # 3. record the current datetime as the value if done is False
+    # 4. Printed Message if done is not False
+    # 5.save() function remains same it the end
+    # 6. ucid and implemented date has been added
+
 
 
 def view_task(index):
