@@ -210,7 +210,7 @@ def mark_done(index):
     # 2. used try-except for displaying message for index out of bounds scenarios
     # 3. record the current datetime as the value if done is False
     # 4. Printed Message if done is not False
-    # 5.save() function remains same it the end
+    # 5. save() function remains same it the end
     # 6. ucid and implemented date has been added
 
 
@@ -248,13 +248,33 @@ def view_task(index):
 
 def delete_task(index):
     """ deletes a task from the tasks list by index """
-    # delete/remove task from list by index
-    # message should show if it was successful or not
     # consider index out of bounds scenarios and include appropriate message(s) for invalid index
-    # make sure save() is still called last in this function
-    # include your ucid and date as a comment of when you implemented this, briefly summarize the solution
+    try:
+        task = tasks[index]
 
-    save()
+        # delete/remove task from list by index
+        del tasks[index]
+
+        # message should show if it was successful or not
+        print("Deletion Successful")
+
+        # make sure save() is still called last in this function
+        save()
+    except IndexError:
+        print("Given index is not available in Tasks list!")
+        print("Delete Not Successful")
+    except Exception as e:
+        print(str(e))
+        print("Delete Not Successful")
+    # include your ucid and date as a comment of when you implemented this, briefly summarize the solution
+    # ucid = vr76
+    # date = 20/02/2023
+    # solution:
+    # 1. delete/remove task from tasks list with given index value and del
+    # 2. Displayed message If it is Successful
+    # 3. used try-except for displaying message for index out of bounds scenarios
+    # 4. save() function remains same it the end
+    # 5. ucid and implemented date has been added
 
 
 def get_incomplete_tasks():
