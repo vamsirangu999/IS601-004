@@ -1,51 +1,158 @@
-import pytest
-
-# make sure there's an __init__.py in this tests folder and that
-# the tests folder is in the same folder as the IcecreamMachine stuff
 from BurgerMachine import BurgerMachine
+from BurgerMachineExceptions import ExceededRemainingChoicesException, OutOfStockException, InvalidStageException
 
 
-# this is an example test showing how to cascade fixtures to build up state
+# UCID = vr76, Data = 18-03-2023
+def test_1():
+    try:
+        machine = BurgerMachine()
+        machine.reset()
+        machine.handle_patty("veggie")
+        machine.handle_toppings("cheese")
+        assert False
+    except InvalidStageException:
+        assert True
 
-@pytest.fixture
-def machine():
-    bm = BurgerMachine()
-    return bm
+
+# UCID = vr76, Data = 18-03-2023
+def test_2():
+    try:
+        machine = BurgerMachine()
+        machine.reset()
+        for _ in range(4):
+            machine.handle_bun("White Burger Bun")
+            machine.handle_patty("veggie")
+            machine.handle_patty("veggie")
+            machine.handle_patty("veggie")
+            machine.handle_patty("next")
+            machine.handle_toppings("cheese")
+            machine.handle_toppings("done")
+            machine.handle_pay(4.25, "4.25")
+        assert False
+    except OutOfStockException:
+        assert True
 
 
-# sample fixture, can delete if not using
-@pytest.fixture
-def first_order(machine):
-    machine.handle_bun("no bun")
-    machine.handle_patty("veggie")
+# UCID = vr76, Data = 18-03-2023
+def test_3():
+    try:
+        machine = BurgerMachine()
+        machine.reset()
+        for _ in range(4):
+            machine.handle_bun("White Burger Bun")
+            machine.handle_patty("veggie")
+            machine.handle_patty("next")
+            machine.handle_toppings("cheese")
+            machine.handle_toppings("cheese")
+            machine.handle_toppings("cheese")
+            machine.handle_toppings("done")
+            machine.handle_pay(2.75, "2.75")
+        assert False
+    except OutOfStockException:
+        assert True
+
+
+# UCID = vr76, Data = 18-03-2023
+def test_4():
+    try:
+        machine = BurgerMachine()
+        machine.reset()
+        machine.handle_bun("White Burger Bun")
+        machine.handle_patty("Beef")
+        machine.handle_patty("Beef")
+        machine.handle_patty("Beef")
+        machine.handle_patty("Beef")
+        assert False
+    except ExceededRemainingChoicesException:
+        assert True
+
+
+# UCID = vr76, Data = 18-03-2023
+def test_5():
+    try:
+        machine = BurgerMachine()
+        machine.reset()
+        machine.handle_bun("White Burger Bun")
+        machine.handle_patty("Turkey")
+        machine.handle_patty("next")
+        machine.handle_toppings("pickles")
+        machine.handle_toppings("pickles")
+        machine.handle_toppings("pickles")
+        machine.handle_toppings("pickles")
+        assert False
+    except ExceededRemainingChoicesException:
+        assert True
+
+
+# UCID = vr76, Data = 18-03-2023
+def test_6():
+    machine = BurgerMachine()
+    machine.reset()
+    machine.clean_machine()
+    machine.handle_bun("White Burger Bun")
+    machine.handle_patty("Turkey")
     machine.handle_patty("next")
+    machine.handle_toppings("pickles")
     machine.handle_toppings("done")
-    machine.handle_pay(10000, "10000")
-    return machine
+    assert machine.calculate_cost() == 2.25
+
+    machine = BurgerMachine()
+    machine.reset()
+    machine.handle_bun("No Bun")
+    machine.handle_patty("next")
+    machine.handle_toppings("pickles")
+    machine.handle_toppings("done")
+    assert machine.calculate_cost() == 0.25
+
+    machine = BurgerMachine()
+    machine.reset()
+    machine.handle_bun("Lettuce Wrap")
+    machine.handle_patty("Turkey")
+    machine.handle_patty("next")
+    machine.handle_toppings("pickles")
+    machine.handle_toppings("pickles")
+    machine.handle_toppings("done")
+    assert machine.calculate_cost() == 3.0
 
 
-# sample fixture, can delete if not using
-@pytest.fixture
-def second_order(first_order):
-    first_order.handle_bun("lettuce wrap")
-    first_order.handle_patty("turkey")
-    first_order.handle_patty("turkey")
-    first_order.handle_patty("next")
-    first_order.handle_toppings("cheese")
-    first_order.handle_toppings("cheese")
-    first_order.handle_toppings("done")
-    # machine.handle_pay(10000,"10000")
-    return first_order
+# UCID = vr76, Data = 18-03-2023
+def test_7():
+    machine = BurgerMachine()
+    machine.handle_bun("White Burger Bun")
+    machine.handle_patty("Turkey")
+    machine.handle_patty("next")
+    machine.handle_toppings("pickles")
+    machine.handle_toppings("done")
+    machine.handle_pay(2.25, "2.25")
+
+    machine.handle_bun("No Bun")
+    machine.handle_patty("next")
+    machine.handle_toppings("pickles")
+    machine.handle_toppings("done")
+    machine.handle_pay(2.5, "2.5")
+
+    machine.handle_bun("Lettuce Wrap")
+    machine.handle_patty("Turkey")
+    machine.handle_patty("next")
+    machine.handle_toppings("pickles")
+    machine.handle_toppings("done")
+    machine.handle_pay(5.25, "5.25")
+    assert machine.total_sales == 10.0
 
 
-# sample test case, can delete if not using
-def test_production_line(second_order):
-    for j in second_order.buns:
-        print(second_order.inprogress_burger)
-        if j.name.lower() == second_order.inprogress_burger[0].name.lower():
-            assert True
-            return
+# UCID = vr76, Data = 18-03-2023
+def test_8():
+    machine = BurgerMachine()
+    machine.handle_bun("White Burger Bun")
+    machine.handle_patty("Turkey")
+    machine.handle_patty("next")
+    machine.handle_toppings("ketchup")
+    machine.handle_toppings("done")
+    machine.handle_pay(2.25, "2.25")
 
-    assert False
-
-# add required test cases below
+    machine.handle_bun("No Bun")
+    machine.handle_patty("next")
+    machine.handle_toppings("ketchup")
+    machine.handle_toppings("done")
+    machine.handle_pay(2.5, "2.5")
+    assert machine.total_burgers == 2
