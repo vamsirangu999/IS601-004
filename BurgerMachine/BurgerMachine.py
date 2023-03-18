@@ -2,8 +2,7 @@ import sys
 from enum import Enum
 
 from BurgerMachineExceptions import ExceededRemainingChoicesException, InvalidChoiceException, InvalidStageException, \
-    NeedsCleaningException, OutOfStockException
-from BurgerMachineExceptions import InvalidPaymentException
+    NeedsCleaningException, OutOfStockException, InvalidPaymentException
 
 
 class Usable:
@@ -54,7 +53,8 @@ class BurgerMachine:
     MAX_PATTIES = 3
     MAX_TOPPINGS = 3
 
-    buns = [Bun(name="No Bun", cost=0), Bun(name="White Burger Bun", cost=1), Bun("Wheat Burger Bun", cost=1.25), Bun("Lettuce Wrap", cost=1.5)]
+    buns = [Bun(name="No Bun", cost=0), Bun(name="White Burger Bun", cost=1), Bun("Wheat Burger Bun", cost=1.25),
+            Bun("Lettuce Wrap", cost=1.5)]
     patties = [Patty(name="Turkey", quantity=10, cost=1), Patty(name="Veggie", quantity=10, cost=1),
                Patty(name="Beef", quantity=10, cost=1)]
     toppings = [Topping(name="Lettuce", quantity=10, cost=.25), Topping(name="Tomato", quantity=10, cost=.25),
@@ -190,7 +190,7 @@ class BurgerMachine:
                 expected = self.calculate_cost()
                 # show expected value as currency format
                 # require total to be entered as currency format ${:,.2f}'.format(1234.5)
-                total = input("Your total is ${:,.2f}, please enter the exact value.\n".format(expected))
+                total = input("Your total is ${:,}, please enter the exact value.\n".format(expected))
                 self.handle_pay(expected, total)
 
                 choice = input("What would you like to do? (order or quit)\n")
@@ -203,23 +203,55 @@ class BurgerMachine:
             # quit
             print("Quitting the burger machine")
             sys.exit()
-        # handle OutOfStockException
-        # show an appropriate message of what stage/category was out of stock
-        # handle NeedsCleaningException
-        # prompt user to type "clean" to trigger clean_machine()
-        # any other input is ignored
-        # print a message whether or not the machine was cleaned
-        # handle InvalidChoiceException
-        # show an appropriate message of what stage/category was the invalid choice was in
-        # handle ExceededRemainingChoicesException
-        # show an appropriate message of which stage/category was exceeded
-        # move to the next stage/category
-        # handle InvalidPaymentException
-        # show an appropriate message
+        except OutOfStockException:
+            # UCID = vr76, Data = 18-03-2023
+            # handle OutOfStockException
+            # show an appropriate message of what stage/category was out of stock
+            print('Item Out of Stock in Stage: {}'.format(self.currently_selecting.name))
+            print("Select another Option")
+            self.run()
+        except NeedsCleaningException:
+            # UCID = vr76, Data = 18-03-2023
+            # handle NeedsCleaningException
+            # prompt user to type "clean" to trigger clean_machine()
+            # any other input is ignored
+            # print a message whether or not the machine was cleaned
+            try:
+                cl = input("Type 'clean' to Clean the Machine\n")
+                if cl == "clean":
+                    self.clean_machine()
+                    print("Machine Cleaned")
+                else:
+                    print("Machine Not Cleaned")
+            except:
+                print("Machine Not Cleaned")
+            self.run()
+        except InvalidChoiceException:
+            # UCID = vr76, Data = 18-03-2023
+            # handle InvalidChoiceException
+            # show an appropriate message of what stage/category was the invalid choice was in
+            print('Stage: {}:  Item Not in Options'.format(self.currently_selecting.name))
+            self.run()
+        except ExceededRemainingChoicesException:
+            # UCID = vr76, Data = 18-03-2023
+            # handle ExceededRemainingChoicesException
+            # show an appropriate message of which stage/category was exceeded
+            # move to the next stage/category
+            print("In Stage {}:  Exceeded Remaining Choices Moving to next stage".format(self.currently_selecting.name))
+            if self.currently_selecting.name == "Patty":
+                self.currently_selecting = STAGE.Toppings
+            elif self.currently_selecting.name == "Toppings":
+                self.currently_selecting = STAGE.Pay
+            self.run()
+        except InvalidPaymentException:
+            # UCID = vr76, Data = 18-03-2023
+            # handle InvalidPaymentException
+            # show an appropriate message
+            print("Please Correct Amount")
+            self.run()
         except:
             # this is a default catch all, follow the steps above
             print("Something went wrong")
-
         self.run()
 
     def start(self):
