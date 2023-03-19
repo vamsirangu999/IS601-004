@@ -94,7 +94,7 @@ def test_6():
     machine.handle_patty("next")
     machine.handle_toppings("pickles")
     machine.handle_toppings("done")
-    assert machine.calculate_cost() == 2.25
+    assert machine.calculate_cost() == "$2.25"
 
     machine = BurgerMachine()
     machine.reset()
@@ -102,7 +102,7 @@ def test_6():
     machine.handle_patty("next")
     machine.handle_toppings("pickles")
     machine.handle_toppings("done")
-    assert machine.calculate_cost() == 0.25
+    assert machine.calculate_cost() == "$0.25"
 
     machine = BurgerMachine()
     machine.reset()
@@ -112,7 +112,7 @@ def test_6():
     machine.handle_toppings("pickles")
     machine.handle_toppings("pickles")
     machine.handle_toppings("done")
-    assert machine.calculate_cost() == 3.0
+    assert machine.calculate_cost() == "$3.0"
 
 
 # UCID = vr76, Data = 18-03-2023

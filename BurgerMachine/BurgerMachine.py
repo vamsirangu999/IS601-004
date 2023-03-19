@@ -152,7 +152,7 @@ class BurgerMachine:
         if total == str(expected):
             print("Thank you! Enjoy your burger!")
             self.total_burgers += 1
-            self.total_sales += expected  # only if successful
+            self.total_sales += float(expected)  # only if successful
             # print(f"Total sales so far {self.total_sales}")
             self.reset()
         else:
@@ -167,7 +167,7 @@ class BurgerMachine:
         totalcost = 0
         for item in self.inprogress_burger:
             totalcost = totalcost + item.cost
-        return totalcost
+        return "${:,}".format(totalcost)
 
     def run(self):
         try:
@@ -190,8 +190,8 @@ class BurgerMachine:
                 expected = self.calculate_cost()
                 # show expected value as currency format
                 # require total to be entered as currency format ${:,.2f}'.format(1234.5)
-                total = input("Your total is ${:,}, please enter the exact value.\n".format(expected))
-                self.handle_pay(expected, total)
+                total = input("Your total is {}, please enter the exact value.\n".format(expected))
+                self.handle_pay(expected.replace(",", "").replace("$", ""), total)
 
                 choice = input("What would you like to do? (order or quit)\n")
                 if choice == "quit":
