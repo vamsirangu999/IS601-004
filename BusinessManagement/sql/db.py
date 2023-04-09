@@ -142,7 +142,7 @@ class DB:
                 port = url.port
                 database = url.path.strip("/")
                 try:
-                    DB.db =  pymysql.connect(host=host, user=user, password=password, database=database, port=int(port))
+                    DB.db =  pymysql.connect(host="us-cdbr-east-06.cleardb.net", user="b38a2e36a8daea", password="c085dcc9", database="heroku_53dba61971bf1dc", port=int(3306))
                 except Error as e:
                     print("Error while connecting to MySQL", e)
                     raise e
