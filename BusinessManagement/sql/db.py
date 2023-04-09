@@ -147,7 +147,9 @@ class DB:
                     print("Error while connecting to MySQL", e)
                     raise e
             else: # old logic as fallback
+                print(db_url)
                 data = re.findall("mysql:\/\/(\w+):(\w+)@([\w\.]+):([\d]+)\/([\w]+)", db_url)
+                print(data)
                 if len(data) > 0:
                     data = data[0]
                     if len(data) >= 5:
