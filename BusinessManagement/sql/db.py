@@ -1,19 +1,20 @@
 from enum import Enum
 import pymysql
-#from mysql.connector import Error
+# from mysql.connector import Error
 from pymysql import Error
 import json
+
 
 class CRUD(Enum):
     CREATE = 1,
     READ = 2,
     UPDATE = 3,
-    DELETE = 4, 
+    DELETE = 4,
     ALTER = 5
 
 
 class DBResponse:
-    def __init__(self, status, row = None, rows = None):
+    def __init__(self, status, row=None, rows=None):
         self.status = status
         if row is not None:
             self.row = row
@@ -23,14 +24,17 @@ class DBResponse:
             self.rows = rows
         else:
             self.rows = []
+
     def __str__(self):
         return json.dumps(self.__dict__)
 
+
 class DB:
     db = None
-    def __runQuery(op, isMany, queryString, args = None):
+
+    def __runQuery(op, isMany, queryString, args=None):
         response = None
-        #print(f"query {queryString} args {args}")
+        # print(f"query {queryString} args {args}")
         try:
             db = DB.getDB()
             cursor = db.cursor(pymysql.cursors.DictCursor)
@@ -39,9 +43,10 @@ class DB:
                 if args is not None and len(args) > 0:
                     if type(args[0]) is dict:
                         args = {k: v for d in args for k, v in d.items()}
+                        print(args)
                     status = cursor.execute(queryString, args)
                 else:
-                    
+
                     status = cursor.execute(queryString)
             else:
                 if args is not None and len(args) > 0:
@@ -52,7 +57,7 @@ class DB:
                 if not isMany:
                     result = cursor.fetchone()
                     # response = {"status": True if status is None else False, "row": result}
-                    
+
                     status = True if status >= 0 else False
                     response = DBResponse(status, result)
                 else:
@@ -69,20 +74,20 @@ class DB:
                 cursor.close()
             except Exception as ce:
                 print("cursor close error", ce)
-        
+
         except Error as e:
-            #if e.errno == -1:
+            # if e.errno == -1:
             if e.args[0] == -1:
                 DB.close()
             # converting to a plain exception so other modules don't need to import mysql.connector.Error
             # this will let you more easily swap out DB connectors without needing to refactor your code, just this class
             raise Exception(e)
-        return response 
+        return response
 
     @staticmethod
     def delete(queryString, *args):
         return DB.__runQuery(CRUD.DELETE, False, queryString, args)
-        
+
     @staticmethod
     def update(queryString, *args):
         return DB.__runQuery(CRUD.UPDATE, False, queryString, args)
@@ -95,7 +100,7 @@ class DB:
             return DB.__runQuery(CRUD.ALTER, False, queryString)
         else:
             return DB.__runQuery(CRUD.ALTER, False, queryString)
-            #raise Exception("Please use one of the abstracted methods for this query")
+            # raise Exception("Please use one of the abstracted methods for this query")
 
     @staticmethod
     def insertMany(queryString, data):
@@ -105,16 +110,14 @@ class DB:
     def insertOne(queryString, *args):
         return DB.__runQuery(CRUD.CREATE, False, queryString, args)
 
-
     @staticmethod
     def selectAll(queryString, *args):
         return DB.__runQuery(CRUD.READ, True, queryString, args)
 
-
     @staticmethod
     def selectOne(queryString, *args):
         return DB.__runQuery(CRUD.READ, False, queryString, args)
-    
+
     @staticmethod
     def close():
         try:
@@ -126,37 +129,40 @@ class DB:
     @staticmethod
     def getDB():
         if DB.db is None or DB.db.open == False:
-            #import mysql.connector
-            #import pymysql
+            # import mysql.connector
+            # import pymysql
             import os
             import re
             from dotenv import load_dotenv
             load_dotenv()
-            db_url  = os.environ.get("DB_URL")
+            db_url = os.environ.get("DB_URL")
             from urllib.parse import urlparse
             url = urlparse(db_url)
             if url:
-                user = url.username
-                password = url.password
-                host = url.hostname
-                port = url.port
-                database = url.path.strip("/")
+                # user = url.username
+                # password = url.password
+                # host = url.hostname
+                # port = url.port
+                # database = url.path.strip("/")
                 try:
-                    DB.db =  pymysql.connect(host="us-cdbr-east-06.cleardb.net", user="b38a2e36a8daea", password="c085dcc9", database="heroku_53dba61971bf1dc", port=int(3306))
+                    DB.db = pymysql.connect(host="us-cdbr-east-06.cleardb.net", user="bf7cbcf54e92f7",
+                                            password="0e7e4c3a", database="heroku_e0d338896c0313f", port=int(3306))
                 except Error as e:
                     print("Error while connecting to MySQL", e)
                     raise e
-            else: # old logic as fallback
+            else:  # old logic as fallback
                 print(db_url)
-                data = re.findall("mysql:\/\/(\w+):(\w+)@([\w\.]+):([\d]+)\/([\w]+)", db_url)
+                data = re.findall(
+                    "mysql:\/\/(\w+):(\w+)@([\w\.]+):([\d]+)\/([\w]+)", db_url)
                 print(data)
                 if len(data) > 0:
                     data = data[0]
                     if len(data) >= 5:
                         try:
-                            user,password,host,port,database = data
-                            #DB.db = mysql.connector.connect(host=host, user=user, password=password, database=database, port=port,
-                            DB.db = pymysql.connect(host=host, user=user, password=password, database=database, port=int(port))
+                            user, password, host, port, database = data
+                            # DB.db = mysql.connector.connect(host=host, user=user, password=password, database=database, port=port,
+                            DB.db = pymysql.connect(
+                                host=host, user=user, password=password, database=database, port=int(port))
                         except Error as e:
                             print("Error while connecting to MySQL", e)
                             raise e
@@ -165,6 +171,7 @@ class DB:
                 else:
                     raise Exception("Invalid connection string")
         return DB.db
+
 
 if __name__ == "__main__":
     # verifies connection works
