@@ -123,6 +123,9 @@ def profile():
             flash("Saved Profile", "success")
             if updating_password:
                 flash("Password Changed", "success")
+            else:
+                flash("Password invalid", "error")
+            
         except SQLAlchemyError as e:
             print(e)
             handle_duplicate_column(str(e.orig))
