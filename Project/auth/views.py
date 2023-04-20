@@ -43,6 +43,13 @@ def test_admin():
 def register():
     form = RegistrationForm()
     if form.validate_on_submit():
+        if User.query.filter_by(username=form.username.data).first():
+            flash("username is taken", "error")
+            return render_template('registration.html', form=form)
+
+        if User.query.filter_by(email=form.email.data).first():
+            flash("Email is already registered", "error")
+            return render_template('registration.html', form=form)
 
         user = User(username=form.username.data, email=form.email.data)
         user.set_password(form.password1.data)
@@ -71,6 +78,7 @@ def login():
             # Tell Flask-Principal the identity changed
             identity_changed.send(current_app._get_current_object(),
                                   identity=Identity(user.id))
+            flash("Successfully Logged In", "success")
             return redirect(next_route or url_for('auth.home'))
         flash('Invalid login details.', "danger")
     return render_template('login.html', form=form)
@@ -86,7 +94,7 @@ def logout():
 
     # Tell Flask-Principal the user is anonymous
     identity_changed.send(current_app._get_current_object(), identity=AnonymousIdentity())
-
+    flash("Successfully Logged out", "success")
     return redirect(url_for('auth.home'))
 
 
@@ -104,7 +112,7 @@ def profile():
         cpw = form.current_password.data
         pw = form.password1.data
         updating_password = False
-        if len(pw) > 0 and len(cpw) > 0 and current_user.verify_password(cpw):
+        if len(pw) > 0 and len(cpw) > 0 and current_user.check_password(cpw):
             current_user.set_password(pw)
             updating_password = True
         current_user.email = form.email.data
