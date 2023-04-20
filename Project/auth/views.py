@@ -109,6 +109,15 @@ def protected():
 def profile():
     form = ProfileForm(obj=current_user)
     if form.validate_on_submit():
+        
+        if User.query.filter_by(username=form.username.data).first():
+            flash("username is taken", "error")
+            return render_template('profile.html', form=form)
+
+        if User.query.filter_by(email=form.email.data).first():
+            flash("Email is already registered", "error")
+            return render_template('profile.html', form=form)
+
         cpw = form.current_password.data
         pw = form.password1.data
         updating_password = False
