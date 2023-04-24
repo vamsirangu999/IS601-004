@@ -1,6 +1,6 @@
 <table><tr><td> <em>Assignment: </em> IS601 Milestone 2 Shop Project</td></tr>
 <tr><td> <em>Student: </em> Vamsi Naidu Rangu (vr76)</td></tr>
-<tr><td> <em>Generated: </em> 24/04/2023 21:35:03</td></tr>
+<tr><td> <em>Generated: </em> 24/04/2023 21:40:55</td></tr>
 <tr><td> <em>Grading Link: </em> <a rel="noreferrer noopener" href="https://learn.ethereallab.app/homework/IS601-004-S23/is601-milestone-2-shop-project/grade/vr76" target="_blank">Grading</a></td></tr></table>
 <table><tr><td> <em>Instructions: </em> <ol><li>Checkout Milestone2 branch</li><li>Create a new markdown file called milestone2.md</li><li>git add/commit/push immediate</li><li>Fill in the below deliverables</li><li>At the end copy the markdown and paste it into milestone2.md</li><li>Add/commit/push the changes to Milestone2</li><li>PR Milestone2 to dev and verify</li><li>PR dev to prod and verify</li><li>Checkout dev locally and pull changes to get ready for Milestone 3</li><li>Submit the direct link to this new milestone2.md file from your GitHub prod branch to Canvas</li></ol><p>Note: Ensure all images appear properly on github and everywhere else. Images are only accepted from dev or prod, not local host. All website links must be from prod (you can assume/infer this by getting your dev URL and changing dev to prod).</p></td></tr></table>
 <table><tr><td> <em>Deliverable 1: </em> Users with admin or shop owner will be able to add products </td></tr><tr><td><em>Status: </em> <img width="100" height="20" src="https://user-images.githubusercontent.com/54863474/211707773-e6aef7cb-d5b2-4053-bbb1-b09fc609041e.png"></td></tr>
@@ -19,7 +19,7 @@
 <tr><td> <em>Sub-Task 4: </em> Add related pull request link(s)</td></tr>
 <tr><td> <a rel="noreferrer noopener" target="_blank" href="https://github.com/vamsirangu999/IS601-004/pull/21">https://github.com/vamsirangu999/IS601-004/pull/21</a> </td></tr>
 <tr><td> <em>Sub-Task 5: </em> Add a direct link to heroku prod for this file</td></tr>
-<tr><td> <a rel="noreferrer noopener" target="_blank" href="https://vr76-milestone1-prod.herokuapp.com">https://vr76-milestone1-prod.herokuapp.com</a> </td></tr>
+<tr><td> <a rel="noreferrer noopener" target="_blank" href="https://vr76-milestone2-prod.herokuapp.com">https://vr76-milestone2-prod.herokuapp.com</a> </td></tr>
 </table></td></tr>
 <table><tr><td> <em>Deliverable 2: </em> Any user can see visible products on the Shop Page </td></tr><tr><td><em>Status: </em> <img width="100" height="20" src="https://user-images.githubusercontent.com/54863474/211707773-e6aef7cb-d5b2-4053-bbb1-b09fc609041e.png"></td></tr>
 <tr><td><table><tr><td> <em>Sub-Task 1: </em> Add a screenshot of the Shop page showing 10 items without filters/sorting applied</td></tr>
@@ -45,7 +45,7 @@
 <tr><td> <em>Sub-Task 5: </em> Add related pull request link(s)</td></tr>
 <tr><td> <a rel="noreferrer noopener" target="_blank" href="https://github.com/vamsirangu999/IS601-004/pull/21">https://github.com/vamsirangu999/IS601-004/pull/21</a> </td></tr>
 <tr><td> <em>Sub-Task 6: </em> Add a direct link to heroku prod for this file</td></tr>
-<tr><td> <a rel="noreferrer noopener" target="_blank" href="https://vr76-milestone1-prod.herokuapp.com">https://vr76-milestone1-prod.herokuapp.com</a> </td></tr>
+<tr><td> <a rel="noreferrer noopener" target="_blank" href="https://vr76-milestone2-prod.herokuapp.com">https://vr76-milestone2-prod.herokuapp.com</a> </td></tr>
 </table></td></tr>
 <table><tr><td> <em>Deliverable 3: </em> Show Admin/Shop Owner Product List (this is not the Shop page and should show visibility status) </td></tr><tr><td><em>Status: </em> <img width="100" height="20" src="https://user-images.githubusercontent.com/54863474/211707773-e6aef7cb-d5b2-4053-bbb1-b09fc609041e.png"></td></tr>
 <tr><td><table><tr><td> <em>Sub-Task 1: </em> Screenshot of the Admin List page/results</td></tr>
@@ -58,7 +58,7 @@
 <tr><td> <em>Sub-Task 3: </em> Add related pull request link(s)</td></tr>
 <tr><td> <a rel="noreferrer noopener" target="_blank" href="https://github.com/vamsirangu999/IS601-004/pull/21">https://github.com/vamsirangu999/IS601-004/pull/21</a> </td></tr>
 <tr><td> <em>Sub-Task 4: </em> Add a direct link to heroku prod for this file</td></tr>
-<tr><td> <a rel="noreferrer noopener" target="_blank" href="https://vr76-milestone1-prod.herokuapp.com">https://vr76-milestone1-prod.herokuapp.com</a> </td></tr>
+<tr><td> <a rel="noreferrer noopener" target="_blank" href="https://vr76-milestone2-prod.herokuapp.com">https://vr76-milestone2-prod.herokuapp.com</a> </td></tr>
 </table></td></tr>
 <table><tr><td> <em>Deliverable 4: </em> Admin/Shop Owner Edit button </td></tr><tr><td><em>Status: </em> <img width="100" height="20" src="https://user-images.githubusercontent.com/54863474/211707773-e6aef7cb-d5b2-4053-bbb1-b09fc609041e.png"></td></tr>
 <tr><td><table><tr><td> <em>Sub-Task 1: </em> Add a screenshot showing the edit button visible to the Admin on the Shop page</td></tr>
@@ -89,7 +89,7 @@
 <tr><td> <em>Sub-Task 6: </em> Add related pull request link(s)</td></tr>
 <tr><td> <a rel="noreferrer noopener" target="_blank" href="https://github.com/vamsirangu999/IS601-004/pull/21">https://github.com/vamsirangu999/IS601-004/pull/21</a> </td></tr>
 <tr><td> <em>Sub-Task 7: </em> Add a direct link to heroku prod for this file</td></tr>
-<tr><td> <a rel="noreferrer noopener" target="_blank" href="https://vr76-milestone1-prod.herokuapp.com">https://vr76-milestone1-prod.herokuapp.com</a> </td></tr>
+<tr><td> <a rel="noreferrer noopener" target="_blank" href="https://vr76-milestone2-prod.herokuapp.com">https://vr76-milestone2-prod.herokuapp.com</a> </td></tr>
 </table></td></tr>
 <table><tr><td> <em>Deliverable 5: </em> Product Details Page </td></tr><tr><td><em>Status: </em> <img width="100" height="20" src="https://user-images.githubusercontent.com/54863474/211707773-e6aef7cb-d5b2-4053-bbb1-b09fc609041e.png"></td></tr>
 <tr><td><table><tr><td> <em>Sub-Task 1: </em> Add a screenshot showing the button (clickable item) that directs the user to the Product Details Page</td></tr>
@@ -107,7 +107,7 @@
 <tr><td> <em>Sub-Task 4: </em> Add related pull request link(s)</td></tr>
 <tr><td> <a rel="noreferrer noopener" target="_blank" href="https://github.com/vamsirangu999/IS601-004/pull/21">https://github.com/vamsirangu999/IS601-004/pull/21</a> </td></tr>
 <tr><td> <em>Sub-Task 5: </em> Add a direct link to heroku prod for this file (can be any specific item)</td></tr>
-<tr><td> <a rel="noreferrer noopener" target="_blank" href="https://vr76-milestone1-prod.herokuapp.com">https://vr76-milestone1-prod.herokuapp.com</a> </td></tr>
+<tr><td> <a rel="noreferrer noopener" target="_blank" href="https://vr76-milestone2-prod.herokuapp.com">https://vr76-milestone2-prod.herokuapp.com</a> </td></tr>
 </table></td></tr>
 <table><tr><td> <em>Deliverable 6: </em> Add to Cart </td></tr><tr><td><em>Status: </em> <img width="100" height="20" src="https://user-images.githubusercontent.com/54863474/211707773-e6aef7cb-d5b2-4053-bbb1-b09fc609041e.png"></td></tr>
 <tr><td><table><tr><td> <em>Sub-Task 1: </em> Add a screenshot of the success message of adding to cart</td></tr>
@@ -143,7 +143,7 @@
 <tr><td> <em>Sub-Task 3: </em> Add related pull request link(s)</td></tr>
 <tr><td> <a rel="noreferrer noopener" target="_blank" href="https://github.com/vamsirangu999/IS601-004/pull/21">https://github.com/vamsirangu999/IS601-004/pull/21</a> </td></tr>
 <tr><td> <em>Sub-Task 4: </em> Add a direct link to heroku prod for this file</td></tr>
-<tr><td> <a rel="noreferrer noopener" target="_blank" href="https://vr76-milestone1-prod.herokuapp.com">https://vr76-milestone1-prod.herokuapp.com</a> </td></tr>
+<tr><td> <a rel="noreferrer noopener" target="_blank" href="https://vr76-milestone2-prod.herokuapp.com/">https://vr76-milestone2-prod.herokuapp.com/</a> </td></tr>
 </table></td></tr>
 <table><tr><td> <em>Deliverable 8: </em> User can update cart quantity </td></tr><tr><td><em>Status: </em> <img width="100" height="20" src="https://user-images.githubusercontent.com/54863474/211707773-e6aef7cb-d5b2-4053-bbb1-b09fc609041e.png"></td></tr>
 <tr><td><table><tr><td> <em>Sub-Task 1: </em> Show a before and after screenshot of Cart Quantity update</td></tr>
@@ -198,6 +198,6 @@
 <tr><td><table><tr><td> <em>Sub-Task 1: </em> Describe any issues and learnings throughout this milestone</td></tr>
 <tr><td> <em>Response:</em> <div>Updating the database is a critical aspect of any web application. As data<br>is added or changed within the application, it must be reflected in the<br>database to ensure that the data is accurate and up-to-date. Failure to keep<br>the database updated can lead to errors and inconsistencies in the application. To<br>prevent this, it is important to regularly check and update the database as<br>necessary.</div><div><br></div><div>Jinja templates are a powerful tool for rendering dynamic content within Flask applications.<br>They allow developers to write HTML code that includes placeholders for dynamic content,<br>which is then filled in with data from the application. This makes it<br>easy to create dynamic pages that display data based on user input or<br>other factors. However, it is important to be mindful of the data being<br>displayed in the Jinja templates, as sensitive information should be protected from unauthorized<br>access.</div><div><br></div><div>Implementing roles in Flask can help to ensure that users have appropriate access<br>to different parts of the application. By assigning roles to users based on<br>their level of access, developers can limit the actions that users are able<br>to perform within the application. This can help to prevent unauthorized access to<br>sensitive data or functionality. It is important to ensure that roles are assigned<br>correctly and that users are only able to perform actions that are appropriate<br>for their level of access</div><br></td></tr>
 <tr><td> <em>Sub-Task 2: </em> Add a link to your herok prod project's login page</td></tr>
-<tr><td> <a rel="noreferrer noopener" target="_blank" href="https://vr76-milestone1-prod.herokuapp.com">https://vr76-milestone1-prod.herokuapp.com</a> </td></tr>
+<tr><td> <a rel="noreferrer noopener" target="_blank" href="https://vr76-milestone2-prod.herokuapp.com">https://vr76-milestone2-prod.herokuapp.com</a> </td></tr>
 </table></td></tr>
 <table><tr><td><em>Grading Link: </em><a rel="noreferrer noopener" href="https://learn.ethereallab.app/homework/IS601-004-S23/is601-milestone-2-shop-project/grade/vr76" target="_blank">Grading</a></td></tr></table>
