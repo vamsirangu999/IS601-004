@@ -134,18 +134,14 @@ class DB:
             db_url = os.environ.get("DB_URL")
             data = re.findall("mysql:\/\/(\w+):(\w+)@([\w\.]+):([\d]+)\/([\w]+)", db_url)
             if len(data) > 0:
-                data = data[0]
-                if len(data) >= 5:
-                    try:
-                        user, password, host, port, database = data
-                        DB.db = mysql.connector.connect(host=host, user=user, password=password, database=database,
-                                                        port=port,
-                                                        connection_timeout=10)
-                        DB.db.autocommit = True
-                    except Error as e:
-                        print("Error while connecting to MySQL", e)
-                else:
-                    raise Exception("Missing connection details")
+                try:
+                    # user, password, host, port, database = data
+                    DB.db = mysql.connector.connect(host="db.ethereallab.app", user="ac2526", password="PlyCCNCCQeZX", database="ac2526",
+                                                    port=int(3306),
+                                                    connection_timeout=10)
+                    DB.db.autocommit = True
+                except Error as e:
+                    print("Error while connecting to MySQL", e)
             else:
                 raise Exception("Invalid connection string")
         return DB.db
