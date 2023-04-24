@@ -1,54 +1,57 @@
-import email_validator
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField
-from wtforms.validators import DataRequired, Email, EqualTo, ValidationError
+from wtforms import EmailField, PasswordField, SubmitField, StringField
+from wtforms.validators import DataRequired, Email, EqualTo, Length, Optional
+from wtforms.validators import ValidationError
 
-# custom validator
-class EmailOrUsernameValidator(object):
-    def __init__(self, message=None):
-        if not message:
-            message = "Username or email is invalid"
-        self.message = message
+def is_valid_username(username):
+    import re
+    r = re.fullmatch("^[a-z0-9_-]{2,30}$", username)
+    print("re",r)
+    if not r:
+        print("validation errr")
+        raise ValidationError("Invalid username format")
 
-    def __call__(self, form, field):
-        if "@" in field.data:
+class AuthForm(FlaskForm):
+    # shared form that groups most of our validations together to reduce repetition
+    username = StringField("username", validators=[DataRequired(), Length(2, 30)])
+    email = EmailField("email", validators=[DataRequired(), Email()])
+    password = PasswordField("password", validators=[DataRequired(), EqualTo('confirm', message='Passwords must match'), Length(8)])
+    confirm = PasswordField("confirm", validators=[DataRequired(),  EqualTo('password', message='Passwords must match'),Length(8)])
+    def validate_username(form, field):
+        print("checking ", field.data)
+        is_valid_username(field.data)
+class RegisterForm(AuthForm):
+    submit = SubmitField("Register")
+
+class LoginForm(AuthForm):
+    email = StringField("email or username", validators=[DataRequired()]) #EmailField("email", validators=[DataRequired(), Email()])
+    submit = SubmitField("Login")
+    def __init__(self, *args, **kwargs):
+        super(LoginForm, self).__init__( *args, **kwargs)
+        if len(self.password.validators) >= 2:
+            self.password.validators.pop(1)
+        del self.confirm
+        del self.username
+        
+    # https://wtforms.readthedocs.io/en/stable/validators/#custom-validators
+    def validate_email(form, field):
+        email = field.data
+        from email_validator import validate_email
+        if "@" in email:
             try:
-                email_validator.validate_email(field.data)
-            except Exception as e:
-                print(e)
-                self.message = "Invalid Email {}".format(e)
-                field.errors.append(self.message)
-                return False
-
+                validate_email(email)
+            except:
+                raise ValidationError("Invalid email address")
         else:
-            if not len(field.data) > 2:  # basic/sample username validation
-                self.message = "Invalid username"
-                field.errors.append(self.message)
-                return False
+            is_valid_username(email)
         return True
-
-
-class RegistrationForm(FlaskForm):
-    username = StringField('username', validators=[DataRequired()])
-    email = StringField('Email', validators=[DataRequired(), Email()])
-    password1 = PasswordField('Password', validators=[DataRequired()])
-    password2 = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password1')])
-    submit = SubmitField('Register')
-
-
-class LoginForm(FlaskForm):
-    email = StringField('Email/Username',
-                        validators=[DataRequired(),
-                                    EmailOrUsernameValidator()])  # see validate() to allow username OR email validation
-    password = PasswordField('Password', validators=[DataRequired()])
-    # remember = BooleanField('Remember Me')
-    submit = SubmitField('Login')
-
-
-class ProfileForm(FlaskForm):
-    username = StringField('username', validators=[DataRequired()])
-    email = StringField('Email', validators=[DataRequired(), Email()])
-    current_password = PasswordField('Current Password', validators=[])
-    password1 = PasswordField('New Password', validators=[])
-    password2 = PasswordField('Confirm new Password', validators=[EqualTo('password1')])
-    submit = SubmitField('Save Profile')
+                
+class ProfileForm(AuthForm):
+    current_password = PasswordField("current password", validators=[Optional()])
+    # https://wtforms.readthedocs.io/en/3.0.x/forms/#form-inheritance
+    def __init__(self, *args, **kwargs):
+        super(ProfileForm, self).__init__( *args, **kwargs)
+        # replace required validator with optional
+        self.password.validators[0]=Optional()
+        self.confirm.validators[0]=Optional()
+    submit = SubmitField("Update")
