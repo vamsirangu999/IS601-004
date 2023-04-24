@@ -128,15 +128,16 @@ class DB:
         if DB.db is None or DB.db.is_connected() == False:
             import mysql.connector
             import os
-            import re
             from dotenv import load_dotenv
             load_dotenv()
             db_url = os.environ.get("DB_URL")
-            data = re.findall("mysql:\/\/(\w+):(\w+)@([\w\.]+):([\d]+)\/([\w]+)", db_url)
+            # data = re.findall("mysql:\/\/(\w+):(\w+)@([\w\.]+):([\d]+)\/([\w]+)", db_url)
+            data = db_url
             if len(data) > 0:
                 try:
                     # user, password, host, port, database = data
-                    DB.db = mysql.connector.connect(host="db.ethereallab.app", user="ac2526", password="PlyCCNCCQeZX", database="ac2526",
+                    DB.db = mysql.connector.connect(host="us-cdbr-east-06.cleardb.net", user="be2020c131c0cd",
+                                                    password="7ddd22e2", database="heroku_7357a1cd6d2bd80",
                                                     port=int(3306),
                                                     connection_timeout=10)
                     DB.db.autocommit = True
