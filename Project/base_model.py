@@ -2,11 +2,10 @@
 # we'll follow the design of each table having an id (primary key) column and two timestamps (created, modified)
 from datetime import datetime
 
+import sqlalchemy as sa
 from flask_sqlalchemy import Model, SQLAlchemy
 from sqlalchemy import DateTime
-import sqlalchemy as sa
 from sqlalchemy.ext.declarative import declared_attr
-
 
 
 class IdModel(Model):
