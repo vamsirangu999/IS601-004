@@ -337,7 +337,7 @@ def order():
         try:
             # locking query to order_id and user_id so the user can see only their orders
             result = DB.selectAll("""
-            SELECT name, oi.unit_price, oi.quantity, (oi.unit_price*oi.quantity) as subtotal FROM IS601_S_OrderItems oi, IS601_S_Products i, IS601_S_Orders o WHERE oi.product_id = i.id AND oi.order_id = o.id AND order_id = %s
+            SELECT name, oi.unit_price, oi.quantity, o.address, (oi.unit_price*oi.quantity) as subtotal FROM IS601_S_OrderItems oi, IS601_S_Products i, IS601_S_Orders o WHERE oi.product_id = i.id AND oi.order_id = o.id AND order_id = %s
             """, id)
             if result.status and result.rows:
                 rows = result.rows
