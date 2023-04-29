@@ -223,7 +223,7 @@ def purchase():
         if not has_error:
             balance = float(request.form.get('amount'))
             if total > balance:
-                flash(str(total - balance) + " is Invalid Amount, Enter Valid Amount", "danger")
+                flash("Invalid Amount, Enter Valid Amount, Difference amount is " + str(total - balance), "danger")
                 has_error = True
         # create order data
         order_id = -1
