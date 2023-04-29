@@ -200,7 +200,7 @@ def purchase():
         DB.getDB().autocommit = False  # make a transaction
 
         # get cart to verify
-        # UCID: VR76 Date: 23/04/2023
+        # UCID: VR76 Date: 28/04/2023
         result = DB.selectAll("""SELECT c.id, product_id, name, c.desired_quantity, i.stock, c.unit_price as cart_cost, i.unit_price as item_cost, (c.desired_quantity * c.unit_price) as subtotal 
         FROM IS601_S_Cart c JOIN IS601_S_Products i on c.product_id = i.id
         WHERE c.user_id = %s
@@ -223,7 +223,7 @@ def purchase():
         if not has_error:
             balance = float(request.form.get('amount'))
             if total > balance:
-                flash("You can't afford to make this purchase", "danger")
+                flash("Invalid Amount, Enter Valid Amount, Difference amount is " + str(total - balance), "danger")
                 has_error = True
         # create order data
         order_id = -1
@@ -337,7 +337,7 @@ def order():
         try:
             # locking query to order_id and user_id so the user can see only their orders
             result = DB.selectAll("""
-            SELECT name, oi.unit_price, oi.quantity, (oi.unit_price*oi.quantity) as subtotal FROM IS601_S_OrderItems oi, IS601_S_Products i, IS601_S_Orders o WHERE oi.product_id = i.id AND oi.order_id = o.id AND order_id = %s
+            SELECT name, oi.unit_price, oi.quantity, o.address, (oi.unit_price*oi.quantity) as subtotal FROM IS601_S_OrderItems oi, IS601_S_Products i, IS601_S_Orders o WHERE oi.product_id = i.id AND oi.order_id = o.id AND order_id = %s
             """, id)
             if result.status and result.rows:
                 rows = result.rows
